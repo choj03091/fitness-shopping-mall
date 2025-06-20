@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cjt.shoppingmall.mapper.PaymentMapper">
+
+    <!-- 결제 정보 추가 -->
+    <insert id="insertPayment" parameterType="com.cjt.shoppingmall.command.Payment"
+            useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO payments
+        (orderId, paymentKey, amount, method, status, createdAt, updatedAt)
+        VALUES
+        (#{orderId}, #{paymentKey}, #{amount}, #{method}, #{status}, NOW(), NOW());
+    </insert>
+
+    <!-- 결제 상세 조회 -->
+    <select id="getPaymentById" parameterType="long" resultType="com.cjt.shoppingmall.command.Payment">
+        SELECT *
+        FROM payments
+        WHERE id = #{id}
+    </select>
+
+    <!-- 주문별 결제 조회 -->
+    <select id="getPaymentsByOrderId" parameterType="long" resultType="com.cjt.shoppingmall.command.Payment">
+        SELECT *
+        FROM payments
+        WHERE orderId = #{orderId}
+    </select>
+
+    <!-- 결제 상태 업데이트 -->
+    <update id="updatePaymentStatus">
+        UPDATE payments
+        SET status = #{status}, updatedAt = NOW()
+        WHERE id = #{id}
+    </update>
+
+</mapper>

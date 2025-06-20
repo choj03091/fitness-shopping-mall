@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cjt.shoppingmall.mapper.ProductOptionMapper">
+
+    <insert id="insert" parameterType="com.cjt.shoppingmall.command.ProductOption">
+        INSERT INTO productoptions
+        (productId, optionName, optionValue, extraPrice, stockQuantity)
+        VALUES
+        (#{productId}, #{optionName}, #{optionValue}, #{extraPrice}, #{stockQuantity})
+    </insert>
+
+    <select id="findByProductId" resultType="com.cjt.shoppingmall.command.ProductOption">
+        SELECT
+            id,
+            productId,
+            optionName,
+            optionValue,
+            extraPrice,
+            stockQuantity
+        FROM productoptions
+        WHERE productId = #{productId}
+    </select>
+
+</mapper>

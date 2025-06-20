@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cjt.shoppingmall.mapper.CartMapper">
+
+	<select id="findById" parameterType="long"
+		resultType="com.cjt.shoppingmall.command.Cart">
+		SELECT *
+		FROM cart
+		WHERE id = #{id}
+	</select>
+
+	<select id="findStockQuantity" parameterType="long"
+		resultType="int">
+		SELECT stockQuantity
+		FROM products
+		WHERE id = #{productId}
+	</select>
+
+
+	<select id="findByUserId" parameterType="long"
+		resultType="com.cjt.shoppingmall.command.Cart">
+		SELECT
+		c.id,
+		c.userId,
+		c.productId,
+		c.option,
+		c.quantity,
+		c.price,
+		p.name AS productName,
+		p.imageUrl,
+		p.stockQuantity
+		FROM cart c
+		JOIN products p ON c.productId = p.id
+		WHERE c.userId = #{userId}
+		ORDER BY c.id DESC
+	</select>
+
+
+	<insert id="insert"
+		parameterType="com.cjt.shoppingmall.command.Cart">
+		INSERT INTO cart (userId, productId, productName,
+		option, quantity, price)
+		VALUES (#{userId}, #{productId},
+		#{productName}, #{option},
+		#{quantity}, #{price})
+	</insert>
+
+	<delete id="delete" parameterType="long">
+		DELETE FROM cart WHERE id =
+		#{id}
+	</delete>
+
+	<select id="existsCartItem" resultType="int">
+		select count(*)
+		from cart
+		where userId = #{userId}
+		and productId = #{productId}
+	</select>
+
+	<delete id="deleteByUserIdAndId">
+		DELETE FROM cart
+		WHERE id = #{id}
+		AND userId =
+		#{userId}
+	</delete>
+
+	<update id="updateQuantity">
+		UPDATE cart
+		SET quantity = #{quantity}
+		WHERE id = #{id}
+		AND userId = #{userId}
+	</update>
+
+	<delete id="deleteAllByUserId" parameterType="long">
+		DELETE FROM cart
+		WHERE userId = #{userId}
+	</delete>
+</mapper>

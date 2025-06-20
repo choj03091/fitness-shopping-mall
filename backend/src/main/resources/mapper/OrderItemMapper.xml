@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cjt.shoppingmall.mapper.OrderItemMapper">
+
+	<!-- 주문 상세 추가 -->
+	<insert id="insertOrderItem"
+		parameterType="com.cjt.shoppingmall.command.OrderItem"
+		useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO orderitems
+		(orderId,
+		productId, productName, option, quantity, price, createdAt,
+		updatedAt)
+		VALUES
+		(#{orderId}, #{productId}, #{productName}, #{option},
+		#{quantity}, #{price},
+		NOW(), NOW());
+	</insert>
+
+	<!-- 주문 상세 조회 -->
+	<select id="findByOrderId" parameterType="long"
+		resultType="com.cjt.shoppingmall.command.OrderItem">
+		SELECT
+		oi.id,
+		oi.orderId,
+		oi.productId,
+		oi.productName,
+		oi.option,
+		oi.quantity,
+		oi.price,
+		oi.createdAt,
+		oi.updatedAt,
+		p.imageUrl
+		FROM orderitems oi
+		JOIN products p ON oi.productId = p.id
+		WHERE oi.orderId = #{orderId}
+	</select>
+
+
+
+
+	<!-- 주문 상세 삭제 -->
+	<delete id="deleteOrderItemsByOrderId" parameterType="long">
+		DELETE FROM
+		orderitems
+		WHERE orderId = #{orderId}
+	</delete>
+
+</mapper>

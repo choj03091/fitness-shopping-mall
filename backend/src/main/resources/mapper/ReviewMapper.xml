@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cjt.shoppingmall.mapper.ReviewMapper">
+
+	<select id="findByProductId" parameterType="long"
+		resultType="com.cjt.shoppingmall.command.Review">
+		SELECT r.*, u.username
+		FROM reviews r
+		JOIN users u ON
+		r.userId = u.id
+		JOIN products p ON r.productId = p.id
+		WHERE r.productId
+		= #{productId}
+		ORDER BY r.createdAt DESC
+	</select>
+
+	<insert id="insert"
+		parameterType="com.cjt.shoppingmall.command.Review">
+		INSERT INTO reviews
+		(productId, userId, orderId, title,
+		content, rating, createdAt)
+		VALUES
+		(#{productId}, #{userId}, #{orderId},
+		#{title}, #{content}, #{rating},
+		NOW())
+	</insert>
+
+	<update id="update"
+		parameterType="com.cjt.shoppingmall.command.Review">
+		UPDATE reviews
+		SET content = #{content},
+		rating =
+		#{rating},
+		title = #{title}
+		WHERE id = #{id}
+	</update>
+
+	<delete id="delete" parameterType="long">
+		DELETE FROM reviews WHERE id =
+		#{id}
+	</delete>
+
+	<!-- increase -->
+	<update id="increaseLike" parameterType="long">
+		UPDATE reviews SET likes
+		= likes + 1 WHERE id = #{id}
+	</update>
+	<update id="increaseDislike" parameterType="long">
+		UPDATE reviews SET
+		dislikes = dislikes + 1 WHERE id = #{id}
+	</update>
+
+	<!-- decrease -->
+	<update id="decreaseLike" parameterType="long">
+		UPDATE reviews
+		SET likes
+		= CASE WHEN likes > 0 THEN likes - 1 ELSE 0 END
+		WHERE id = #{id}
+	</update>
+	<update id="decreaseDislike" parameterType="long">
+		UPDATE reviews
+		SET
+		dislikes = CASE WHEN dislikes > 0 THEN dislikes - 1 ELSE 0 END
+		WHERE id
+		= #{id}
+	</update>
+
+
+	<!-- review_likes -->
+	<select id="getUserReviewLikeStatus"
+		resultType="java.lang.Boolean">
+		SELECT isLike
+		FROM reviewlikes
+		WHERE userId = #{userId} AND reviewId = #{reviewId}
+		LIMIT 1
+	</select>
+
+	<insert id="insertUserReviewLike">
+		INSERT INTO reviewlikes (userId, reviewId, isLike)
+		VALUES (#{userId}, #{reviewId}, #{isLike})
+	</insert>
+
+	<update id="updateUserReviewLike">
+		UPDATE reviewlikes
+		SET isLike = #{isLike}
+		WHERE userId
+		= #{userId} AND reviewId = #{reviewId}
+	</update>
+
+
+</mapper>

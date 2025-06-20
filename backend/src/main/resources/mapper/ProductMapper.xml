@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.cjt.shoppingmall.mapper.ProductMapper">
+
+	<select id="findAll"
+		resultType="com.cjt.shoppingmall.command.Product">
+		SELECT * FROM products;
+	</select>
+
+	<select id="findById" parameterType="long"
+		resultType="com.cjt.shoppingmall.command.Product">
+		SELECT * FROM products WHERE id = #{id};
+	</select>
+
+	<insert id="insert"
+		parameterType="com.cjt.shoppingmall.command.Product">
+		INSERT INTO products
+		(name, description, price,
+		stockQuantity, imageUrl, categoryId, `option`,
+		discountRate)
+		VALUES
+		(#{name}, #{description}, #{price}, #{stockQuantity}, #{imageUrl},
+		#{categoryId}, #{option}, #{discountRate})
+	</insert>
+
+
+	<update id="update"
+		parameterType="com.cjt.shoppingmall.command.Product">
+		UPDATE products
+		SET name = #{name},
+		description =
+		#{description},
+		price = #{price},
+		stockQuantity = #{stockQuantity},
+		imageUrl = #{imageUrl},
+		categoryId = #{categoryId},
+		`option` = #{option},
+		discountRate = #{discountRate}
+		WHERE id = #{id};
+	</update>
+
+	<delete id="delete" parameterType="long">
+		DELETE FROM products WHERE id
+		= #{id};
+	</delete>
+	<update id="updateProductRating" parameterType="long">
+		UPDATE products
+		SET
+		averageRating = (
+		SELECT IFNULL(AVG(r.rating), 0.0)
+		FROM reviews r
+		WHERE r.productId = #{productId}
+		),
+		reviewCount = (
+		SELECT COUNT(*)
+		FROM
+		reviews r
+		WHERE r.productId = #{productId}
+		)
+		WHERE id = #{productId}
+	</update>
+
+	<update id="decreaseStock">
+		UPDATE products
+		SET stockQuantity = stockQuantity -
+		#{quantity}
+		WHERE id = #{productId}
+	</update>
+
+	<update id="updateProductStock">
+		UPDATE products
+		SET stockQuantity = #{stockQuantity}
+		WHERE id = #{id}
+	</update>
+
+	<!-- ⭐ 카테고리별 상품 조회 -->
+	<select id="findByCategoryId"
+		resultType="com.cjt.shoppingmall.command.Product">
+		SELECT * FROM products WHERE categoryId = #{categoryId}
+	</select>
+
+	<!-- ⭐ 부모 카테고리 id로 하위 상품 조회 -->
+	<select id="findByCategoryIds"
+		resultType="com.cjt.shoppingmall.command.Product">
+		SELECT * FROM products
+		WHERE categoryId IN
+		<foreach collection="categoryIds" item="id" open="("
+			separator="," close=")">
+			#{id}
+		</foreach>
+	</select>
+
+
+</mapper>
+
