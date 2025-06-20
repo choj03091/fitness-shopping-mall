@@ -1,0 +1,43 @@
+@import './variables';
+
+.category-section {
+  margin-bottom: 32px;
+
+  h2 {
+    font-size: 24px;
+    margin-bottom: 16px;
+    color: $primary-color;
+  }
+
+  .category-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 16px;
+
+    .category-item {
+      background: white;
+      border-radius: $border-radius;
+      box-shadow: $box-shadow;
+      text-align: center;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+
+      &:hover {
+        transform: translateY(-4px);
+      }
+
+      img {
+        width: 100%;
+        height: 120px;
+        object-fit: cover;
+      }
+
+      span {
+        display: block;
+        padding: 12px;
+        font-weight: 500;
+      }
+    }
+  }
+}

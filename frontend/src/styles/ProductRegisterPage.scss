@@ -1,0 +1,92 @@
+/* ProductRegisterPage.scss */
+
+.product-register-page {
+  max-width: 700px;
+  margin: 50px auto;
+  padding: 40px 30px;
+  background-color: #f9fbfc;
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+  font-family: 'Noto Sans KR', sans-serif;
+
+  h1 {
+    font-size: 1.8rem;
+    color: #1976d2;
+    margin-bottom: 32px;
+    padding-left: 8px;
+    border-left: 5px solid #1976d2;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+
+    input,
+    textarea,
+    select {
+      padding: 12px 14px;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      transition: all 0.2s;
+
+      &:focus {
+        border-color: #1976d2;
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.1);
+      }
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    label {
+      font-weight: 600;
+      margin-bottom: -8px;
+      margin-top: 10px;
+      color: #444;
+    }
+
+    img {
+      max-width: 150px;
+      margin-top: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      object-fit: cover;
+    }
+
+    button[type="submit"] {
+      background-color: #1976d2;
+      color: white;
+      padding: 14px;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 1rem;
+      margin-top: 10px;
+      cursor: pointer;
+      transition: background 0.2s ease;
+
+      &:hover {
+        background-color: #1565c0;
+      }
+    }
+  }
+
+  @media (max-width: 600px) {
+    padding: 24px 16px;
+
+    form {
+      gap: 14px;
+
+      input,
+      textarea,
+      select {
+        font-size: 0.95rem;
+      }
+    }
+  }
+}

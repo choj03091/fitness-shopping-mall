@@ -1,0 +1,34 @@
+@import './variables';
+
+.banner-section {
+  position: relative;
+  overflow: hidden;
+  border-radius: $border-radius;
+  margin-bottom: 32px;
+
+  img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    display: block;
+  }
+
+  .banner-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    text-align: center;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+
+    h1 {
+      font-size: 32px;
+      margin-bottom: 8px;
+    }
+
+    p {
+      font-size: 18px;
+    }
+  }
+}

@@ -1,0 +1,121 @@
+/* ProductListPage.scss */
+
+.product-list-page {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 20px;
+  font-family: "Noto Sans KR", sans-serif;
+
+  h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 30px;
+    color: #333;
+    border-left: 5px solid #ff7a00;
+    padding-left: 15px;
+  }
+
+  .product-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px;
+    list-style: none;
+    padding: 0;
+  }
+
+  .product-card {
+    position: relative;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+
+    &:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 16px 32px rgba(0, 0, 0, 0.08);
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+
+    img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      border-top-left-radius: 16px;
+      border-top-right-radius: 16px;
+    }
+
+    .product-info {
+      padding: 16px;
+
+      h3 {
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 8px;
+        color: #222;
+      }
+
+      .price {
+        font-size: 1rem;
+        color: #1976d2;
+        font-weight: 700;
+        margin-bottom: 6px;
+      }
+
+      .rating {
+        font-size: 0.9rem;
+        color: #666;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+
+        svg {
+          color: gold;
+        }
+      }
+    }
+
+    .wishlist-button {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: #fff;
+      border: none;
+      border-radius: 50%;
+      padding: 10px;
+      font-size: 18px;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+
+      &:hover {
+        background: #ffe0b2;
+        transform: scale(1.1);
+      }
+
+      &.active {
+        background: #ff7a00;
+        color: #fff;
+
+        &:hover {
+          background: #ef6c00;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 600px) {
+    h1 {
+      font-size: 1.5rem;
+      padding-left: 10px;
+    }
+
+    .product-list {
+      grid-template-columns: 1fr;
+    }
+  }
+}
